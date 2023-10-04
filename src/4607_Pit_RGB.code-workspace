@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../FRCProjects/4607_Pit_RGB"
+		},
+		{
+			"name": "StackLight",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"sstream": "cpp",
+			"cmath": "cpp"
+		}
+	}
+}

@@ -17,6 +17,7 @@
 #define FASTLED_INTERNAL        // Suppress build banner
 #include <FastLED.h>
 
+
 #define OLED_CLOCK  15          // Pins for the OLED display
 #define OLED_DATA   4
 #define OLED_RESET  16
@@ -30,6 +31,11 @@ WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
 
 #define USE_SERIAL Serial
+
+#define NUM_LEDS      208       // FastLED definitions
+#define LED_PIN        5
+
+CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
 
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
 	const uint8_t* src = (const uint8_t*) mem;
@@ -103,6 +109,7 @@ bool data_PlcArmorBlockStatuses_BlueDs = data["PlcArmorBlockStatuses"]["BlueDs"]
 bool data_PlcArmorBlockStatuses_RedDs = data["PlcArmorBlockStatuses"]["RedDs"]; // false
 }
 
+//A string to concat the socketData together
 String socketData;
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
@@ -139,6 +146,8 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 			break;
 		case WStype_FRAGMENT_BIN_START:
 		case WStype_FRAGMENT:
+			socketData += (char * )payload;
+			break;
 		case WStype_FRAGMENT_FIN:
 			//USE_SERIAL.printf("[WSc] Fragment Text Fin: %s\n", payload);
 			socketData += (char * )payload; 
@@ -171,6 +180,11 @@ void setup() {
   g_OLED.setFont(u8g2_font_profont15_tf);
   g_lineHeight = g_OLED.getFontAscent() - g_OLED.getFontDescent();        // Descent is a negative number so we add it to the total
 
+FastLED.addLeds<WS2812B, LED_PIN, GRB>(g_LEDs, NUM_LEDS);               // Add our LED strip to the FastLED library
+  FastLED.setBrightness(g_Brightness);
+  set_max_power_indicator_LED(LED_BUILTIN);                               // Light the builtin LED if we power throttle
+  FastLED.setMaxPowerInMilliWatts(g_PowerLimit);                          // Set the power limit, above which brightness will be throttled
+  
 
 	for(uint8_t t = 4; t > 0; t--) {
 		USE_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);
