@@ -37,6 +37,12 @@ WebSocketsClient webSocket;
 #define NUM_LEDS      236       // FastLED definitions
 #define LED_PIN        5
 #define RGB_TOGGLE_PIN 0
+#define BTM_LED_START	0
+#define BTM_LED_END		NUM_LEDS/3
+#define MID_LED_START	BTM_LED_END+1
+#define MID_LED_END		BTM_LED_END*2
+#define TOP_LED_START	MID_LED_END+1
+#define TOP_LED_END		NUM_LEDS
 
 #include "ledgfx.h"
 #include "comet.h"
@@ -44,8 +50,18 @@ WebSocketsClient webSocket;
 #include "twinkle.h"
 #include "fire.h"
 
-CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
+enum animation{
+	NONE,
+	RED,
+	BLUE,
+	GREEN,
+	GREEN_MAEQUEE
+};
 
+animation alianceBlue = NONE;
+
+CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
+FireEffect fire(NUM_LEDS, 50, 100, 20, NUM_LEDS, true, false);    
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
 	const uint8_t* src = (const uint8_t*) mem;
 	USE_SERIAL.printf("\n[HEXDUMP] Address: 0x%08X len: 0x%X (%d)", (ptrdiff_t)src, len, len);
@@ -59,49 +75,74 @@ void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
 	USE_SERIAL.printf("\n");
 }
 
-bool data_CanStartMatch=false;
+bool stationReady(JsonObject data, String station){
+	return data["AllianceStations"][station]["Bypass"] ||
+			(data["AllianceStations"][station]["Ethernet"] &&
+			 data["AllianceStations"][station]["TeamWifiStatuses"]["RadioLinked"]
+			);
+}
+
 void parser(String s){
 	
 	DynamicJsonDocument doc(6145);
 	deserializeJson(doc, s);
   	JsonObject json= doc.as<JsonObject>();
 
+	const char* type = doc["type"]; // "arenaStatus"
 
-const char* type = doc["type"]; // "arenaStatus"
+	JsonObject data = doc["data"];
 
-JsonObject data = doc["data"];
-int data_MatchId = data["MatchId"]; // 1
-int count = 0;
+	if(strcmp(type, "arenaStatus") == 0 ){
+		FastLED.clear();
+		int data_MatchId = data["MatchId"]; // 1
+		int data_MatchState = data["MatchState"]; // 0
+		
+		bool b1_Ready = stationReady(data,"B1");
+		bool b2_Ready = stationReady(data,"B2");
+		bool b3_Ready = stationReady(data,"B3");
+    	CRGB m_color;// = CRGB(255,0,0);
+		if(b1_Ready && b2_Ready && b3_Ready){
+			m_color = CRGB(0,255,0);
+		}else{
+			m_color = CRGB(0,0,255);
+		}
+		for (int i = BTM_LED_START; i < BTM_LED_END; i++){
+			DrawPixels(i, 1, m_color);
+		}
 
-int bp = 0;
-for (JsonPair data_AllianceStation : data["AllianceStations"].as<JsonObject>()) {
-  const char* data_AllianceStation_key = data_AllianceStation.key().c_str(); // "B1", "B2", "B3", "R1", ...
-	USE_SERIAL.print(data_AllianceStation_key);
-	USE_SERIAL.print(": ");
-  // data_AllianceStation.value()["DsConn"] is null
-  bool data_AllianceStation_value_Ethernet = data_AllianceStation.value()["Ethernet"]; // false, false, ...
-  bool data_AllianceStation_value_Astop = data_AllianceStation.value()["Astop"]; // false, false, false, ...
-  bool data_AllianceStation_value_Estop = data_AllianceStation.value()["Estop"]; // false, false, false, ...
-  bool data_AllianceStation_value_Bypass = data_AllianceStation.value()["Bypass"]; // true, true, false, ...
-	if(data_AllianceStation_value_Bypass){
-		bp=bp+1;
+		bool r1_Ready = stationReady(data,"R1");
+		bool r2_Ready = stationReady(data,"R2");
+		bool r3_Ready = stationReady(data,"R3");
+    	
+		if(r1_Ready && r2_Ready && r3_Ready){
+			m_color = CRGB(0,255,0);
+		}else{
+			m_color = CRGB(255,0,0);
+		}
+		for (int i = MID_LED_START; i < MID_LED_END; i++){
+			DrawPixels(i, 1, m_color);
+		}
+		
+		bool data_CanStartMatch = data["CanStartMatch"]; // false
+		if(data_CanStartMatch){
+			//m_color = CRGB(0,255,0);
+			FastLED.clear();
+			//fire.DrawFire();
+			DrawMarquee(CRGB(0,255,0));
+		}else{
+			m_color = CRGB(255,70,0);
+		for (int i = TOP_LED_START; i < TOP_LED_END; i++){
+			DrawPixels(i, 1, m_color);
+		}
+		}
+		
+		
+		
+	
+	
 	}
-	USE_SERIAL.println(bp);
 
-}
-
-for (JsonPair data_TeamWifiStatuse : data["TeamWifiStatuses"].as<JsonObject>()) {
-  const char* data_TeamWifiStatuse_key = data_TeamWifiStatuse.key().c_str(); // "B1", "B2", "B3", "R1", ...
-
-  int data_TeamWifiStatuse_value_TeamId = data_TeamWifiStatuse.value()["TeamId"]; // 0, 0, 0, 0, 0, 0
-  bool data_TeamWifiStatuse_value_RadioLinked = data_TeamWifiStatuse.value()["RadioLinked"]; // false, ...
-}
-
-int data_MatchState = data["MatchState"]; // 0
-data_CanStartMatch = data["CanStartMatch"]; // false
-    CRGB m_color;// = CRGB(255,0,0);
-	FastLED.clear();
-if(data_CanStartMatch||bp>7){
+/* if(data_CanStartMatch||bp>7){
 	USE_SERIAL.println("Start Match");
     m_color= CRGB(0,255,0);
 }else{
@@ -111,7 +152,7 @@ if(data_CanStartMatch||bp>7){
 //	USE_SERIAL.printf("[Paser] heu: %s\n", hue);
 	for (int i = 0; i < NUM_LEDS; i++){
        DrawPixels(i, 1, m_color);
-	}
+	} */
 }
 
 //A string to concat the socketData together
@@ -156,7 +197,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 			//USE_SERIAL.println("WStype_FRAGMENT");
 			break;
 		case WStype_FRAGMENT_FIN:
-			//USE_SERIAL.printf("[WSc] Fragment Text Fin: %s\n", payload);
+			
 			socketData += (char * )payload; 
 			parser(socketData);
 			//USE_SERIAL.println(socketData);
@@ -240,6 +281,7 @@ FastLED.addLeds<WS2812B, LED_PIN, GRB>(g_LEDs, NUM_LEDS);               // Add o
 	
 
 void loop() {
+	DrawMarquee(CRGB(0,255,0));
 	webSocket.loop();
 	FastLED.show(g_Brightness); //  Show and delay
 	EVERY_N_MILLISECONDS(250)

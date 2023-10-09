@@ -17,7 +17,24 @@
 #define FASTLED_INTERNAL
 #include <FastLED.h>
 
+void DrawMarquee(CRGB c)
+{
+   
 
+    // Roughly equivalent to fill_rainbow(g_LEDs, NUM_LEDS, j, 8);
+
+    for (int i = 0; i < NUM_LEDS; i ++)
+        FastLED.leds()[i] = c;
+
+    static int scroll = 0;
+    scroll++;
+
+    for (int i = scroll % 5; i < NUM_LEDS - 1; i += 5)
+    {
+        FastLED.leds()[i] = CRGB::Black;
+    }
+    delay(50);
+}
 void DrawMarquee()
 {
     static byte j = 0;
