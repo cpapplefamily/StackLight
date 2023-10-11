@@ -1,0 +1,180 @@
+{
+  "type": "arenaStatus",
+  "data": {
+    "MatchId": 1,
+    "AllianceStations": {
+      "B1": {
+        "DsConn": null,
+        "Ethernet": false,
+        "Astop": false,
+        "Estop": false,
+        "Bypass": false,
+        "Team": {
+          "Id": 4226,
+          "Name": "Blattner Energy/Target/Eagle Lake Manufacturing/Coldspring/Freeport National Bank/Wells Concrete/Central MN Credit Union/Central Planes Aviation/JT Electric Service/Albany Recycling Center/Arnold's of St. Martin/Albany Bowling Center&Albany Middle High School",
+          "Nickname": "Huskies",
+          "City": "Albany",
+          "StateProv": "Minnesota",
+          "Country": "USA",
+          "RookieYear": 2012,
+          "RobotName": "",
+          "Accomplishments": "<p>2023 Great Northern Regional - Wildcard</p><p>2023 Great Northern Regional - Regional Finalists</p>",
+          "WpaKey": "",
+          "YellowCard": false,
+          "HasConnected": false,
+          "FtaNotes": ""
+        }
+      },
+      "B2": {
+        "DsConn": null,
+        "Ethernet": false,
+        "Astop": false,
+        "Estop": false,
+        "Bypass": false,
+        "Team": {
+          "Id": 3026,
+          "Name": "Trelleborg/Loretto Lions Club/Eaton/Industrial Louvers/Delano Lions&Family/Community",
+          "Nickname": "Orange Crush Robotics",
+          "City": "Delano",
+          "StateProv": "Minnesota",
+          "Country": "USA",
+          "RookieYear": 2009,
+          "RobotName": "",
+          "Accomplishments": "",
+          "WpaKey": "",
+          "YellowCard": false,
+          "HasConnected": false,
+          "FtaNotes": ""
+        }
+      },
+      "B3": {
+        "DsConn": null,
+        "Ethernet": false,
+        "Astop": false,
+        "Estop": false,
+        "Bypass": false,
+        "Team": {
+          "Id": 6175,
+          "Name": "Boston Scientific/Eden Valley Lions/Watkins Lions/Eden Valley - Watkins School District Boosters Club&Eden Valley-Watkins Jr Sr HS",
+          "Nickname": "EVW Mystery Machine",
+          "City": "Eden Valley-Watkins",
+          "StateProv": "Minnesota",
+          "Country": "USA",
+          "RookieYear": 2016,
+          "RobotName": "",
+          "Accomplishments": "<p>2023 Lake Superior Regional - Creativity Award sponsored by Rockwell Automation</p>",
+          "WpaKey": "",
+          "YellowCard": false,
+          "HasConnected": false,
+          "FtaNotes": ""
+        }
+      },
+      "R1": {
+        "DsConn": null,
+        "Ethernet": false,
+        "Astop": false,
+        "Estop": false,
+        "Bypass": false,
+        "Team": {
+          "Id": 4728,
+          "Nam": "Medtronic/UMC/Coldspring/Cold Spring Lions/CMMA/Richmond Lions Club/Lakes Eye Clinic/Blattner Energy/IPM/JV Tooling/Bernick's Pepsi/Central MN Credit Union/Charles Reichert Dental/Cold Spring Family Dentistry/Flexible Pipe Tool Company/Bayer Built Woodworks/Avon Dental/Avon Plastics/Lois Industries/Fall Fabrication&Rocori High School",
+          "Nickname": "ROCORI Ratcheteers",
+          "City": "Cold Spring",
+          "StateProv": "Minnesota",
+          "Country": "USA",
+          "RookieYear": 2013,
+          "RobotName": "",
+          "Accomplishments": "<p>2023 Minnesota North Star Regional at La Crosse - Regional Finalists</p><p>2023 Minnesota North Star Regional at La Crosse - Judges' Award</p><p>2023 Lake Superior Regional - Innovation in Control Award</p><p>2022 Great Northern Regional - Creativity Award sponsored by Rockwell Automation</p><p>2022 Lake Superior Regional - Creativity Award sponsored by Rockwell Automation</p>",
+          "WpaKey": "",
+          "YellowCard": false,
+          "HasConnected": false,
+          "FtaNotes": ""
+        }
+      },
+      "R2": {
+        "DsConn": null,
+        "Ethernet": false,
+        "Astop": false,
+        "Estop": false,
+        "Bypass": false,
+        "Team": {
+          "Id": 4693,
+          "Name": "Medtronic /Rockford Area Schools/Rockford Foundation&Rockford High School",
+          "Nickname": "Axiomatic Aftermath",
+          "City": "Rockford ",
+          "StateProv": "Minnesota",
+          "Country": "USA",
+          "RookieYear": 2013,
+          "RobotName": "",
+          "Accomplishments": "<p>2023 Minnesota North Star Regional at La Crosse - Regional Winners</p>",
+          "WpaKey": "",
+          "YellowCard": false,
+          "HasConnected": false,
+          "FtaNotes": ""
+        }
+      },
+      "R3": {
+        "DsConn": null,
+        "Ethernet": false,
+        "Astop": false,
+        "Estop": false,
+        "Bypass": false,
+        "Team": {
+          "Id": 8516,
+          "Name": "Cognex/Delta ModTech/Automation Inc./NASA/PMMI Skills/Automation Sensors Inc./Mechatronic Solutions/Legacy Christian Academy/Zebra Technologies&Legacy Christian Academy",
+          "Nickname": "Wired Up",
+          "City": "Andover",
+          "StateProv": "Minnesota",
+          "Country": "USA",
+          "RookieYear": 2021,
+          "RobotName": "",
+          "Accomplishments": "<p>2023 Lake Superior Regional - Woodie Flowers Finalist Award</p><p>2022 Turing Division - Championship Division Highest Rookie Seed</p><p>2022 Minnesota 10,000 Lakes Regional presented by Medtronic - Wildcard</p><p>2022 Minnesota 10,000 Lakes Regional presented by Medtronic - Rookie All Star Award</p><p>2022 Minnesota 10,000 Lakes Regional presented by Medtronic - Regional Winners</p>",
+          "WpaKey": "",
+          "YellowCard": false,
+          "HasConnected": false,
+          "FtaNotes": ""
+        }
+      }
+    },
+    "TeamWifiStatuses": {
+      "B1": {
+        "TeamId": 0,
+        "RadioLinked": false,
+        "MBits": 0
+      },
+      "B2": {
+        "TeamId": 0,
+        "RadioLinked": false,
+        "MBits": 0
+      },
+      "B3": {
+        "TeamId": 0,
+        "RadioLinked": false,
+        "MBits": 0
+      },
+      "R1": {
+        "TeamId": 0,
+        "RadioLinked": false,
+        "MBits": 0
+      },
+      "R2": {
+        "TeamId": 0,
+        "RadioLinked": false,
+        "MBits": 0
+      },
+      "R3": {
+        "TeamId": 0,
+        "RadioLinked": false,
+        "MBits": 0
+      }
+    },
+    "MatchState": 0,
+    "CanStartMatch": false,
+    "PlcIsHealthy": false,
+    "FieldEstop": true,
+    "PlcArmorBlockStatuses": {
+      "BlueDs": false,
+      "RedDs": false
+    }
+  }
+}
