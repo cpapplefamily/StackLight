@@ -68,7 +68,7 @@ int 		LT_MatchTimeSec 	= 	0;
 CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
 FireEffect fire(NUM_LEDS, 50, 100, 20, NUM_LEDS, true, false);
 
-const char* ssid = "CheesyArenaAdmin";
+const char* ssid = "CheesyArena_Admin";
 const char* password = "1234Five";
 
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
@@ -88,7 +88,7 @@ void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
 bool stationReady(JsonObject data, String station){
 	return data["AllianceStations"][station]["Bypass"] ||
 			(data["AllianceStations"][station]["Ethernet"] &&
-			 data["AllianceStations"][station]["TeamWifiStatuses"]["RadioLinked"]
+			 data["AllianceStations"][station]["v"]["RadioLinked"]
 			);
 }
 
